@@ -33,7 +33,7 @@ function App() {
       return;
     }
     //alert("Enviei o formulário " + inputoperacao + " - " + inputvalor);
-    let saldoProvisorio = saldo - inputvalor;
+    let saldoProvisorio = saldo + inputvalor;
     let despesasProvisorio = saldo - inputvalor;
     setSaldo(saldoProvisorio);
     setDespesas(inputvalor);
