@@ -13,7 +13,22 @@ function App() {
   const [inputoperacao, setInputoperacao] = useState("");
   const [inputvalor, setInputvalor] = useState("");
 
-  useEffect(() => {}, [api]);
+  useEffect(() => {
+    api.map((item, index) => {
+      if(item.valor < 0){
+        setDespesas(despesas + item.valor)
+      } else {
+        setReceitas(receitas + item.valor)
+      }
+      
+      setSaldo(saldo + item.valor)
+    }
+    ); 
+  }, []);
+
+  useEffect(() => {
+    
+  }, [api]);
 
   function operacao(e) {
     if (e.target.name === "input_operacao") {
