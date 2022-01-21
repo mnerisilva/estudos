@@ -1,19 +1,26 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Api from "./services/Api";
+import Item from "./components/Item";
 
 function App() {
   const [receitas, setReceitas] = useState(0);
   const [despesas, setDespesas] = useState(0);
   const [saldo, setSaldo] = useState(2550);
-  const [api, setApi] = useState([
-    { id: 1, operacao: "Salário", valor: 3700 },
-    { id: 2, operacao: "Giassi", valor: -150 },
-    { id: 3, operacao: "Dentista", valor: -350 },
-  ]);
+  const [api, setApi] = useState(Api);
   const [inputoperacao, setInputoperacao] = useState("");
   const [inputvalor, setInputvalor] = useState("");
 
-  useEffect(() => {}, [api]);
+  useEffect(() => {
+    let _saldo = saldo;
+    let _receitas = receitas;
+    api.map((item) => {
+      _saldo = _saldo + item.valor;
+      return true;
+    });
+    setSaldo(_saldo);
+    setReceitas(_receitas);
+  }, [api]);
 
   function operacao(e) {
     if (e.target.name === "input_operacao") {
@@ -34,7 +41,6 @@ function App() {
     }
     //alert("Enviei o formulário " + inputoperacao + " - " + inputvalor);
     let saldoProvisorio = saldo + inputvalor;
-    let despesasProvisorio = saldo - inputvalor;
     setSaldo(saldoProvisorio);
     setDespesas(inputvalor);
     console.log(inputoperacao, inputvalor);
@@ -77,17 +83,7 @@ function App() {
         <h3>Transações</h3>
 
         <ul id="transactions" className="transactions">
-          {api.map((item, index) => {
-            return (
-              <li
-                className={parseFloat(item.valor) > 0 ? "plus" : "minus"}
-                key={index}
-              >
-                {item.operacao} <span>R$ {item.valor}</span>
-                <button className="delete-btn">x</button>
-              </li>
-            );
-          })}
+          <Item list={api} />
         </ul>
 
         <h3>Adicionar transação</h3>
