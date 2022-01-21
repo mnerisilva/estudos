@@ -14,12 +14,19 @@ function App() {
   useEffect(() => {
     let _saldo = saldo;
     let _receitas = receitas;
+    let _despesas = despesas;
     api.map((item) => {
+      if (item.valor < 0) {
+        _despesas = _despesas + item.valor;
+      } else if (item.valor > 0) {
+        _receitas = receitas + item.valor;
+      }
       _saldo = _saldo + item.valor;
-      return true;
+      //return true;
     });
     setSaldo(_saldo);
     setReceitas(_receitas);
+    setDespesas(_despesas);
   }, [api]);
 
   function operacao(e) {
@@ -39,12 +46,11 @@ function App() {
       setInputvalor("");
       return;
     }
-    //alert("Enviei o formulário " + inputoperacao + " - " + inputvalor);
-    let saldoProvisorio = saldo + inputvalor;
-    setSaldo(saldoProvisorio);
-    setDespesas(inputvalor);
+    //let saldoProvisorio = saldo + inputvalor;
+    //setSaldo(saldoProvisorio);
+    //setDespesas(inputvalor);
     console.log(inputoperacao, inputvalor);
-    let x = { id: 4, operacao: inputoperacao, valor: inputvalor };
+    let x = { id: 5, operacao: inputoperacao, valor: inputvalor };
     //arrOperacao.push(x);
     //console.log("opera " + JSON.stringify(arrOperacao));
     //setApi(arrOperacao);
