@@ -1,32 +1,41 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Api from "./services/Api";
+//import Api from "./services/Api";
 import Item from "./components/Item";
+
+const Api = [
+  { id: 1, operacao: "Salários", valor: 3700 },
+  { id: 2, operacao: "Supermercado Giassi", valor: -150 },
+  { id: 3, operacao: "Dentista - consulta", valor: -350 },
+  { id: 4, operacao: "Médico - consulta", valor: -650 },
+];
 
 function App() {
   const [receitas, setReceitas] = useState(0);
   const [despesas, setDespesas] = useState(0);
-  const [saldo, setSaldo] = useState(2550);
+  const [saldo, setSaldo] = useState(0);
   const [api, setApi] = useState(Api);
   const [inputoperacao, setInputoperacao] = useState("");
   const [inputvalor, setInputvalor] = useState("");
 
   useEffect(() => {
-    let _saldo = saldo;
-    let _receitas = receitas;
-    let _despesas = despesas;
+    let _saldo = 0;
+    let _receitas = 0;
+    let _despesas = 0;
     api.map((item) => {
-      if (item.valor < 0) {
-        _despesas = _despesas + item.valor;
-      } else if (item.valor > 0) {
-        _receitas = receitas + item.valor;
+      console.log(parseFloat(item.valor));
+      if (parseFloat(item.valor) < 0) {
+        _despesas = _despesas + parseFloat(item.valor);
+      } else if (parseFloat(item.valor) > 0) {
+        _receitas = receitas + parseFloat(item.valor);
       }
-      _saldo = _saldo + item.valor;
+      _saldo = _saldo + parseFloat(item.valor);
       //return true;
     });
     setSaldo(_saldo);
     setReceitas(_receitas);
     setDespesas(_despesas);
+    console.log("api após atualização useEffect: " + JSON.stringify(api));
   }, [api]);
 
   function operacao(e) {
@@ -54,6 +63,10 @@ function App() {
     //arrOperacao.push(x);
     //console.log("opera " + JSON.stringify(arrOperacao));
     //setApi(arrOperacao);
+    //Api.push(x);
+    //setSaldo(0);
+    //setReceitas(0);
+    //setDespesas(0);
     setApi([...api, x]);
     setInputoperacao("");
     setInputvalor("");
