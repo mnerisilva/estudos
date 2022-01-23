@@ -4,12 +4,12 @@ import "./App.css";
 import Item from "./components/Item";
 
 const Api = [
-  { id: 1, operacao: "Salários", valor: 3700, tipo: "receita" },
-  { id: 2, operacao: "Supermercado Giassi", valor: 150, tipo: "despesa" },
-  { id: 3, operacao: "Dentista - consulta", valor: 350, tipo: "despesa" },
-  { id: 4, operacao: "Médico - consulta", valor: 650, tipo: "despesa" },
-  { id: 5, operacao: "Vale", valor: 650, tipo: "receita" },
-  { id: 6, operacao: "Botijão de gás", valor: 120, tipo: "despesa" },
+  { id: 1, operacao: "Salários", valor: 3700, tipo: 1 },
+  { id: 2, operacao: "Supermercado Giassi", valor: 150, tipo: 2 },
+  { id: 3, operacao: "Dentista - consulta", valor: 350, tipo: 2 },
+  { id: 4, operacao: "Médico - consulta", valor: 650, tipo: 2 },
+  { id: 5, operacao: "Vale", valor: 650, tipo: 1 },
+  { id: 6, operacao: "Botijão de gás", valor: 120, tipo: 2 },
 ];
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
   const [despesas, setDespesas] = useState(0);
   const [saldo, setSaldo] = useState(0);
   const [api, setApi] = useState(Api);
+  const [tipo, setTipo] = useState();
   const [inputoperacao, setInputoperacao] = useState("");
   const [inputvalor, setInputvalor] = useState("");
 
@@ -29,7 +30,7 @@ function App() {
     setReceitas(0);
     setDespesas(0);
     for (let item in api) {
-      if (api[item].tipo === "despesa") {
+      if (api[item].tipo === 2) {
         _despesas = _despesas - api[item].valor;
         //setDespesas(_despesas);
         _saldo = _saldo - api[item].valor;
@@ -59,6 +60,9 @@ function App() {
     } else if (e.target.name === "input_valor") {
       setInputvalor(parseInt(e.target.value));
     }
+    if (e.target.name === "tipo") {
+      setTipo(parseFloat(e.target.value));
+    }
   }
   //console.log(inputoperacao, inputvalor);
 
@@ -70,23 +74,15 @@ function App() {
       setInputvalor("");
       return;
     }
-    //let saldoProvisorio = saldo + inputvalor;
-    //setSaldo(saldoProvisorio);
-    //setDespesas(inputvalor);
     console.log(inputoperacao, inputvalor);
+    let tipo_operacao = tipo;
     let indice = api.length + 1;
     let x = {
       id: indice,
       operacao: inputoperacao,
       valor: inputvalor,
-      tipo: "despesa",
+      tipo: tipo_operacao,
     };
-    //arrOperacao.push(x);
-    //setApi(arrOperacao);
-    //Api.push(x);
-    //setSaldo(0);
-    //setReceitas(0);
-    //setDespesas(0);
     setApi([...api, x]);
     setInputoperacao("");
     setInputvalor("");
@@ -128,6 +124,28 @@ function App() {
         <h3>Adicionar transação</h3>
         {/****/}
         <form id="form" onSubmit={submit}>
+          <div className="form-control">
+            <input
+              autoFocus
+              type="radio"
+              id="tipo_receita"
+              name="tipo"
+              value={1}
+              onChange={operacao}
+            />
+            <label htmlFor="tipo">Receita</label>
+          </div>
+          <div className="form-control">
+            <input
+              autoFocus
+              type="radio"
+              id="tipo_despesa"
+              name="tipo"
+              value={2}
+              onChange={operacao}
+            />
+            <label htmlFor="tipo">Despesas</label>
+          </div>
           <div className="form-control">
             <label htmlFor="text">Nome</label>
             <input

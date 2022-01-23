@@ -129,6 +129,10 @@ input[type="number"] {
 
 .transactions li.minus {
   border-right: 5px solid #c0392b;
+  padding-right: 5em; /* inseri esta regra - eu, marcelo*/
+}
+.transactions li.minus span {
+  color: #9c88ff; /* inseri esta regra - eu, marcelo*/
 }
 
 .delete-btn {
