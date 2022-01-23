@@ -4,7 +4,7 @@ function Item({ list }) {
       {list.map((item) => {
         return (
           <li
-            className={parseFloat(item.valor) > 0 ? "plus" : "minus"}
+            className={item.tipo === "receita" ? "plus" : "minus"}
             key={item.id}
           >
             {item.operacao} <span>R$ {item.valor}</span>

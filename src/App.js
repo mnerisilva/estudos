@@ -4,10 +4,12 @@ import "./App.css";
 import Item from "./components/Item";
 
 const Api = [
-  { id: 1, operacao: "Salários", valor: 3700 },
-  { id: 2, operacao: "Supermercado Giassi", valor: -150 },
-  { id: 3, operacao: "Dentista - consulta", valor: -350 },
-  { id: 4, operacao: "Médico - consulta", valor: -650 },
+  { id: 1, operacao: "Salários", valor: 3700, tipo: "receita" },
+  { id: 2, operacao: "Supermercado Giassi", valor: 150, tipo: "despesa" },
+  { id: 3, operacao: "Dentista - consulta", valor: 350, tipo: "despesa" },
+  { id: 4, operacao: "Médico - consulta", valor: 650, tipo: "despesa" },
+  { id: 5, operacao: "Vale", valor: 650, tipo: "receita" },
+  { id: 6, operacao: "Botijão de gás", valor: 120, tipo: "despesa" },
 ];
 
 function App() {
@@ -19,23 +21,36 @@ function App() {
   const [inputvalor, setInputvalor] = useState("");
 
   useEffect(() => {
+    console.log("opera " + JSON.stringify(api));
     let _saldo = 0;
     let _receitas = 0;
     let _despesas = 0;
-    api.map((item) => {
-      console.log(parseFloat(item.valor));
-      if (parseFloat(item.valor) < 0) {
-        _despesas = _despesas + parseFloat(item.valor);
-      } else if (parseFloat(item.valor) > 0) {
-        _receitas = receitas + parseFloat(item.valor);
+    setSaldo(0);
+    setReceitas(0);
+    setDespesas(0);
+    for (let item in api) {
+      if (api[item].tipo === "despesa") {
+        _despesas = _despesas - api[item].valor;
+        //setDespesas(_despesas);
+        _saldo = _saldo - api[item].valor;
+        //setSaldo(_saldo);
+      } else {
+        _receitas = _receitas + api[item].valor;
+        //setReceitas(_receitas);
+        _saldo = _saldo + api[item].valor;
+        //setSaldo(_saldo);
       }
-      _saldo = _saldo + parseFloat(item.valor);
-      //return true;
-    });
-    setSaldo(_saldo);
-    setReceitas(_receitas);
-    setDespesas(_despesas);
-    console.log("api após atualização useEffect: " + JSON.stringify(api));
+      setDespesas(_despesas);
+      setReceitas(_receitas);
+      setSaldo(_saldo);
+    }
+    console.log("Despesas: " + _despesas);
+    console.log("Receitas: " + _receitas);
+    console.log("Saldo: " + _saldo);
+    //setSaldo(_saldo);
+    //setReceitas(_receitas);
+    //setDespesas(_despesas);
+    //console.log("api após atualização useEffect: " + JSON.stringify(api));
   }, [api]);
 
   function operacao(e) {
@@ -59,9 +74,14 @@ function App() {
     //setSaldo(saldoProvisorio);
     //setDespesas(inputvalor);
     console.log(inputoperacao, inputvalor);
-    let x = { id: 5, operacao: inputoperacao, valor: inputvalor };
+    let indice = api.length + 1;
+    let x = {
+      id: indice,
+      operacao: inputoperacao,
+      valor: inputvalor,
+      tipo: "despesa",
+    };
     //arrOperacao.push(x);
-    //console.log("opera " + JSON.stringify(arrOperacao));
     //setApi(arrOperacao);
     //Api.push(x);
     //setSaldo(0);
