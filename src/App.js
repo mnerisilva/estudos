@@ -4,12 +4,13 @@ import "./App.css";
 import Item from "./components/Item";
 
 const Api = [
+  /*
   { id: 1, operacao: "Salários", valor: 3700, tipo: 1 },
   { id: 2, operacao: "Supermercado Giassi", valor: 150, tipo: 2 },
   { id: 3, operacao: "Dentista - consulta", valor: 350, tipo: 2 },
   { id: 4, operacao: "Médico - consulta", valor: 650, tipo: 2 },
   { id: 5, operacao: "Vale", valor: 650, tipo: 1 },
-  { id: 6, operacao: "Botijão de gás", valor: 120, tipo: 2 },
+  { id: 6, operacao: "Botijão de gás", valor: 120, tipo: 2 },*/
 ];
 
 function App() {
