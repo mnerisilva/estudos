@@ -65,7 +65,8 @@ function App() {
       setTipo(parseFloat(e.target.value));
     }
   }
-  //console.log(inputoperacao, inputvalor);
+  //console.log(inputoperacao, inputvalor);////
+  ////
 
   function submit(e) {
     e.preventDefault();
